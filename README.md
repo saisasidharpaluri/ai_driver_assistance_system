@@ -54,7 +54,8 @@ python integrated_driver_monitoring.py
 - All frames are processed in worker threads; the main thread composes combined frames and handles display + input.
 
 ## Mermaid flowchart
-Use a Markdown renderer that supports Mermaid to visualize the flowchart included in `PROJECT_REPORT.md`.
+Use a Markdown renderer that supports Mermaid to visualize the flowchart included in `<img width="2631" height="5266" alt="Untitled diagram-2025-11-17-052917" src="https://github.com/user-attachments/assets/e1bf68e8-7312-4b6d-9690-a94511379ec9" />
+`.
 
 ## License & Contact
 (Include your license or institution info here.)
