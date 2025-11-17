@@ -53,8 +53,63 @@ python integrated_driver_monitoring.py
 - Road perception runs a TFLite classifier trained on GTSRB; outputs are fused with lane curvature to detect sharp turns.
 - All frames are processed in worker threads; the main thread composes combined frames and handles display + input.
 
-## Mermaid flowchart
-Use a Markdown renderer that supports Mermaid to visualize the flowchart included in `<img width="2631" height="5266" alt="Untitled diagram-2025-11-17-052917" src="https://github.com/user-attachments/assets/e1bf68e8-7312-4b6d-9690-a94511379ec9" />
+## Flowchart
+Use a Markdown renderer that supports Mermaid to visualize the flowchart included in 'graph TD
+  %% Initialization and Setup (A to C)
+  A[Start System] --> B{Init Hardware}
+  B -->|OK| C[Load Models & Calibrate]
+  C --> D[Start Parallel Threads]
+
+  %% Parallel Threads Start (D to D1/D2)
+  D --> D1[Driver Monitoring Thread]
+  D --> D2[Forward View Thread]
+
+  %% Driver Monitoring Thread (D1 to E8)
+  subgraph Driver Monitoring
+    D1 --> E1[Capture Camera Frame]
+    E1 --> E2[MediaPipe Face Mesh]
+    E2 --> E3[Compute EAR/MAR/HeadPose]
+    E3 --> E4{Driver State Logic}
+    E4 -->|NORMAL| E5[Update Counters]
+    E4 -->|DROWSY| E6[Play Alarm + Slow Down]
+    E4 -->|DRIVER_DOWN/MISSING| E7[Play Alarm + Emergency Stop]
+    E5 --> E8[Share Driver Frame]
+    E6 --> E8
+    E7 --> E8
+    style E4 fill:#ffcccc
+    style E6 fill:#ffddaa
+    style E7 fill:#ff6666
+  end
+
+  %% Forward View Thread (D2 to F10)
+  subgraph Forward View Processing
+    D2 --> F1[Capture Video Frame]
+    F1 --> F2[Lane Detection Pipeline]
+    F2 --> F3[Perspective Transform + Polynomial Fit]
+    F3 --> F4[Compute Lane Curvature]
+    F4 --> F5{Sharp Turn?}
+    F5 -->|Yes| F6[Show Turn Warning]
+    F5 -->|No| F7[Normal Lane Display]
+    F6 --> F8[Run TFLite Sign Classifier]
+    F7 --> F8
+    F8 --> F9[Overlay Driver Monitor]
+    F9 --> F10[Share Combined Frame]
+    style F5 fill:#aaddff
+    style F6 fill:#ffaa66
+  end
+
+  %% Main Display Loop and Shutdown (E8/F10 to M)
+  E8 --> G[Main Thread Display Loop]
+  F10 --> G
+
+  G --> H[cv2.imshow Combined Frame]
+  H --> I[Handle Keyboard Input]
+  I --> J{Exit Signal?}
+  J -->|No| D
+  J -->|Yes| K[Cleanup Threads]
+  K --> L[cv2.destroyAllWindows]
+  L --> M[Shutdown Complete]
+  style J fill:#ccffcc'
 `.
 
 ## License & Contact
