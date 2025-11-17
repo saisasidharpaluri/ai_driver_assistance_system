@@ -58,10 +58,8 @@ python integrated_driver_monitoring.py
 
 ## Working Prototype
 ![1-better](https://github.com/user-attachments/assets/0bb9a176-c2a3-420b-8a8a-25c271a52af5)
-![2](https://github.com/user-attachments/assets/73aba57a-c0e8-4298-8f4a-5a361089be3e)
 ![4](https://github.com/user-attachments/assets/11ea9d27-ccfe-4ae6-b7dc-bb5408b8a360)
 ![5](https://github.com/user-attachments/assets/385c246c-1500-4a5b-8873-33e1cf4d6c96)
-![3](https://github.com/user-attachments/assets/56d2e089-bb94-4e1e-bb75-4d5593b57aec)
 
 ## License & Contact
 (We will Include your license or institution info here.)
